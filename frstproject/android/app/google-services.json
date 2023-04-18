@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "713097133167",
+    "project_id": "farmnow-e1199",
+    "storage_bucket": "farmnow-e1199.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713097133167:android:b875af635a9e3b3649a19a",
+        "android_client_info": {
+          "package_name": "com.example.frstproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713097133167-ltsehk1v7ph9umde0u4kkl52n6it14hl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnbKzGI8EMedDdbW0zehf6ru6S4hPvdww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713097133167-ltsehk1v7ph9umde0u4kkl52n6it14hl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
