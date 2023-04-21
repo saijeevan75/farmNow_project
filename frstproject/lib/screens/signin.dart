@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frstproject/screens/farmer_home.dart';
+import 'package:frstproject/screens/individual/home.dart';
 import 'package:frstproject/screens/individual_home.dart';
 import 'package:frstproject/screens/signup.dart';
 import 'package:frstproject/utils/colors_util.dart';
@@ -11,7 +12,7 @@ import 'package:frstproject/utils/colors_util.dart';
 import '../reusable_widgets/reusable.dart';
 import 'organization_home.dart';
 
-String message = " ";
+
 
 final _auth = FirebaseAuth.instance;
 final _firestore = FirebaseFirestore.instance;
@@ -28,8 +29,11 @@ class SignScreen extends StatefulWidget {
 class _SignScreenState extends State<SignScreen> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
-  String uid = "";
-  // String message = " . ";
+  String uid = " ";
+
+  bool loading = false;
+  String message =  " " ;
+
 
   final _formkey = GlobalKey<FormState>();
 
@@ -81,73 +85,88 @@ class _SignScreenState extends State<SignScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-                  pageButton(context, true, () async {
-                    if (_formkey.currentState!.validate()) {
-                      try {
-                        UserCredential userCredential =
-                            await _auth.signInWithEmailAndPassword(
-                          email: _emailTextController.text,
-                          password: _passwordTextController.text,
-                        );
-
-                        String uid = userCredential.user?.uid ?? '';
-
-                        DocumentSnapshot userDoc = await FirebaseFirestore
-                            .instance
-                            .collection('users')
-                            .doc(uid)
-                            .get();
-                        Map<String, dynamic> userData =
-                            userDoc.data() as Map<String, dynamic>;
-                        String role = userData['role'];
-
-                        if (role == "Farmer") {
-                          // ignore: use_build_context_synchronously
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      HomeScreen(userid: uid)));
-                        }
-                        if (role == "Individual") {
-                          // ignore: use_build_context_synchronously
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      IndiviScreen(userid: uid)));
-                        }
-                        if (role == "Organization") {
-                          // ignore: use_build_context_synchronously
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      OrganizationScreen(userid: uid)));
-                        }
-                      } on FirebaseAuthException catch (e) {
-                        // if (e.code == 'user-not-found') {
-                        //   print('No user found, please enter valid username');
-                        //   message =
-                        //       "No user found, please enter valid username";
-                        // } else if (e.code == 'wrong-password') {
-                        //   print("Wrong password provided!");
-                        //   message = "Wrong password provided!";
-                        // }
+                  GestureDetector(
+                    onTap: () {
+                      Future.delayed(const Duration(seconds: 0), (){
                         setState(() {
-                          if (e.code == 'user-not-found') {
-                            message =
-                                "User not found! Please enter valid username";
-                          } else if (e.code == 'wrong-password') {
-                            message =
-                                "Wrong password! Please enter correct password";
-                          }
-                          // message = "Invalid username or password";
+                          loading = true;
+                          
                         });
-                        // print("Error ${error.toString()}");
+                      });
+                      
+                    },
+                    child: pageButton(context, true, () async {
+                      if (_formkey.currentState!.validate()) {
+                        if (loading == true) {const CircularProgressIndicator();}
+
+                        try {
+                          UserCredential userCredential =
+                              await _auth.signInWithEmailAndPassword(
+                            email: _emailTextController.text,
+                            password: _passwordTextController.text,
+                          );
+                  
+                          String uid = userCredential.user?.uid ?? 'uid';
+                  
+                          DocumentSnapshot userDoc = await FirebaseFirestore
+                              .instance
+                              .collection('users')
+                              .doc(uid)
+                              .get();
+                          Map<String, dynamic> userData =
+                              userDoc.data() as Map<String, dynamic>;
+                          String role = userData['role'];
+                          if (role == "Farmer") {
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        HomeScreen(userid: uid)));
+                          }
+                          if (role == "Individual") {
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const HomePage()));
+                          }
+                          if (role == "Organization") {
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        OrganizationScreen(userid: uid)));
+                          }
+                        } on FirebaseAuthException catch (e) {
+                          // if (e.code == 'user-not-found') {
+                          //   print('No user found, please enter valid username');
+                          //   message =
+                          //       "No user found, please enter valid username";
+                          // } else if (e.code == 'wrong-password') {
+                          //   print("Wrong password provided!");
+                          //   message = "Wrong password provided!";
+                          // }
+                          setState(() {
+                            if (e.code == 'user-not-found') {
+                              message =
+                                  "User not found! Please enter valid username";
+                            } else if (e.code == 'wrong-password') {
+                              message =
+                                  "Wrong password! Please enter correct password";
+                            }
+                            // message = "Invalid username or password";
+                          });
+                          // print("Error ${error.toString()}");
+                        }
+                        
                       }
-                    }
-                  }),
+                    }),
+                  ),
+                  
+                  // const CircularProgressIndicator(),
 
                   signUpOption(),
                   const SizedBox(
