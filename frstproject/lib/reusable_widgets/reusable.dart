@@ -10,6 +10,16 @@ Image logoWidget(String imageName) {
   );
 }
 
+Image logoWidgetDrawer(String imageName, double width, double height) {
+  return Image.asset(
+    imageName,
+    fit: BoxFit.fitWidth,
+    width: width,
+    height: height,
+    color: Colors.white,
+  );
+}
+
 Image logofarmdetails(String imageName, double width, double height) {
   return Image.asset(
     imageName,
@@ -172,7 +182,7 @@ TextFormField reusableTextFieldEmail(String text, IconData icon,
         fillColor: Colors.white.withOpacity(0.3),
         prefixIcon: Icon(
           icon,
-          color: Colors.white70,
+          color: Colors.white,
         ),
         labelText: text,
         labelStyle: TextStyle(color: Colors.white.withOpacity(0.9)),
@@ -286,6 +296,54 @@ TextFormField reusableTextFieldPhNo(String text, IconData icon,
   );
 }
 
+TextFormField reusableTextFieldPhNoFF(String text, IconData icon,
+    bool isPasswordType, TextEditingController controller) {
+  return TextFormField(
+    controller: controller,
+    obscureText: isPasswordType,
+    enableSuggestions: !isPasswordType,
+    autocorrect: !isPasswordType,
+    cursorColor: Colors.white,
+    style: TextStyle(
+      color: Colors.white.withOpacity(0.9),
+      fontSize: 15,
+    ),
+    decoration: InputDecoration(
+        errorStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(width: 0.3, color: Colors.green),
+            borderRadius: BorderRadius.circular(15)),
+        fillColor: Colors.green[800],
+        prefixIcon: Icon(
+          icon,
+          color: Colors.white70,
+        ),
+        labelText: text,
+        labelStyle: TextStyle(color: Colors.white.withOpacity(0.9)),
+        filled: true,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(0.0),
+            borderSide: const BorderSide(width: 0, style: BorderStyle.none))),
+    keyboardType: isPasswordType
+        ? TextInputType.visiblePassword
+        : TextInputType.emailAddress,
+    // validator: (value) {
+      
+    //   RegExp regex = new RegExp(r'^\d{10}$');
+    //   if (value!.isEmpty) {
+    //     return "*Price cannot be empty";
+    //   }
+    //   if (!regex.hasMatch(value)) {
+    //     return ("*Please enter a valid price");
+    //   } else {
+    //     return null;
+    //   }
+    // },
+    // onChanged: (value) {},
+  );
+}
+
 TextFormField reusableTextFieldName(String text, IconData icon,
     bool isPasswordType, TextEditingController controller) {
   return TextFormField(
@@ -318,7 +376,52 @@ TextFormField reusableTextFieldName(String text, IconData icon,
     validator: (value) {
       RegExp regex = new RegExp(r'^\d{10}$');
       if (value!.isEmpty) {
-        return "*PhNo cannot be empty";
+        return "*Name cannot be empty";
+      }
+      else if(!RegExp(r'^[a-zA-Z\s]*$').hasMatch(value)){
+        return '*Should only contain letters';
+      }
+    },
+    onChanged: (value) {},
+  );
+}
+
+TextFormField reusableTextFieldNameFF(String text, IconData icon,
+    bool isPasswordType, TextEditingController controller) {
+  return TextFormField(
+    controller: controller,
+    obscureText: isPasswordType,
+    enableSuggestions: !isPasswordType,
+    autocorrect: !isPasswordType,
+    cursorColor: Colors.white,
+    style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 15),
+    decoration: InputDecoration(
+        errorStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(width: 0.3, color: Colors.green),
+            borderRadius: BorderRadius.circular(15)),
+        fillColor: Colors.green[800],
+        prefixIcon: Icon(
+          icon,
+          color: Colors.white70,
+        ),
+        labelText: text,
+        labelStyle: TextStyle(color: Colors.white.withOpacity(0.9)),
+        filled: true,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(0.0),
+            borderSide: const BorderSide(width: 0, style: BorderStyle.none))),
+    keyboardType: isPasswordType
+        ? TextInputType.visiblePassword
+        : TextInputType.emailAddress,
+    validator: (value) {
+      RegExp regex = new RegExp(r'^\d{10}$');
+      if (value!.isEmpty) {
+        return "*Name cannot be empty";
+      }
+      else if(!RegExp(r'^[a-zA-Z\s]*$').hasMatch(value)){
+        return '*Should only contain letters';
       }
     },
     onChanged: (value) {},

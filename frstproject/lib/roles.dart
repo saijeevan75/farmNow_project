@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class UserRole {
   String? email;
   String? role;
-  String? uid;
+  String uid = " ";
   String? name;
   String? phNo;
 
 // receiving data
-  UserRole({this.uid, this.email, this.role, this.name, this.phNo});
+  UserRole({uid, this.email, this.role, this.name, this.phNo});
   factory UserRole.fromMap(map) {
     return UserRole(
         uid: map['uid'],

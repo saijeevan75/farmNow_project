@@ -8,7 +8,8 @@ import 'package:frstproject/screens/farmer_home.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../reusable_widgets/reusable.dart';
 import '../../roles.dart';
-import '../../screens/signup.dart';
+
+
 
 final _auth = FirebaseAuth.instance;
 
@@ -35,6 +36,8 @@ class _FarmDetailsState extends State<FarmDetails> {
       image = img;
     });
   }
+
+  final _formkey = GlobalKey<FormState>();
 
   void myAlert() {
     showDialog(
@@ -109,106 +112,116 @@ class _FarmDetailsState extends State<FarmDetails> {
           hexStringToColor("#1CAC78"),
         ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),*/
         child: SingleChildScrollView(
-          child: Padding(
-            //EdgeInsets.fromLTRB(left, top, right, bottom)
-            padding: EdgeInsets.fromLTRB(15, 0, 20, 0),
-            child: Column(children: <Widget>[
-              logofarmdetails("assets/images/farmnow.png", 200, 200),
-              const SizedBox(
-                height: 0,
-              ),
-              Text(
-                'Please fill the required farm details:',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.grey[600]),
-              ),
+          child: Form(
+            key: _formkey,
+            child: Padding(
+              //EdgeInsets.fromLTRB(left, top, right, bottom)
+              padding: EdgeInsets.fromLTRB(15, 0, 20, 0),
+              child: Column(children: <Widget>[
+                logofarmdetails("assets/images/farmnow.png", 200, 200),
+                const SizedBox(
+                  height: 0,
+                ),
+                Text(
+                  'Please fill the required farm details:',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.grey[600]),
+                ),
 
-              const SizedBox(
-                height: 20,
-              ),
-              //const Spacer(),
+                const SizedBox(
+                  height: 20,
+                ),
+                //const Spacer(),
 
-              farmdetailsfield("Enter City", Icons.person_2_outlined, false,
-                  _cityTextController),
-              const SizedBox(
-                height: 20,
-              ),
+                reusableTextFieldNameFF("Enter City", Icons.person_2_outlined,
+                    false, _cityTextController),
+                const SizedBox(
+                  height: 20,
+                ),
 
-              farmdetailsfield("Enter address", Icons.person_2_outlined, false,
-                  _addressTextController),
-              const SizedBox(
-                height: 20,
-              ),
+                reusableTextFieldNameFF("Enter address",
+                    Icons.person_2_outlined, false, _addressTextController),
+                const SizedBox(
+                  height: 20,
+                ),
 
-              farmdetailsfield(
-                  "Enter Crop", Icons.lock_outline, true, _cropTextController),
+                reusableTextFieldNameFF("Enter Crop", Icons.lock_outline, true,
+                    _cropTextController),
 
-              const SizedBox(
-                height: 20,
-              ),
+                const SizedBox(
+                  height: 20,
+                ),
 
-              farmdetailsfield("Enter Price Per day",
-                  Icons.mobile_friendly_rounded, true, _priceTextController),
+                reusableTextFieldPhNoFF("Enter Price Per day",
+                    Icons.mobile_friendly_rounded, true, _priceTextController),
 
-              const SizedBox(
-                height: 20,
-              ),
+                const SizedBox(
+                  height: 20,
+                ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 25),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          myAlert();
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.green),
-                        ),
-                        child: const Text('Upload Photo')),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-
-              const SizedBox(
-                height: 20,
-              ),
-              image != null
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.file(
-                          //to show image, you type like this.
-                          File(image!.path),
-                          fit: BoxFit.cover,
-                          width: MediaQuery.of(context).size.width,
-                          height: 300,
-                        ),
-                      ),
-                    )
-                  : const Text(
-                      "",
-                      style: TextStyle(fontSize: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 25),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            myAlert();
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color?>(
+                                Colors.green[800]),
+                          ),
+                          child: const Text('Upload Photo')),
                     ),
-              ElevatedButton(
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 20,
+                ),
+                /*image != null
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.file(
+                            //to show image, you type like this.
+                            File(image!.path),
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width,
+                            height: 300,
+                          ),
+                        ),
+                      )
+                    : const Text(
+                        "",
+                        style: TextStyle(fontSize: 20),
+                      ),*/
+                ElevatedButton(
                   onPressed: () async {
-                    final bytes = await image!.readAsBytes();
-                    final base64Image = base64Encode(bytes);
-                    fill(
-                        _cityTextController.text,
-                        _addressTextController.text,
-                        _cropTextController.text,
-                        _priceTextController.text,
-                        base64Image,
-                        widget.userid);
+                    if (_formkey.currentState!.validate()) {
+                      final bytes = await image!.readAsBytes();
+                      final base64Image = base64Encode(bytes);
+                      fill(
+                          _cityTextController.text,
+                          _addressTextController.text,
+                          _cropTextController.text,
+                          _priceTextController.text,
+                          base64Image,
+                          widget.userid);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                HomeScreen(userid: '',)), // Replace AnotherPage() with the desired destination page
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size(140, 50),
@@ -216,8 +229,10 @@ class _FarmDetailsState extends State<FarmDetails> {
                   ),
                   child: const Text('Submit form',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16)))
-            ]),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                ),
+              ]),
+            ),
           ),
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:frstproject/screens/signin.dart';
 
+import '../reusable_widgets/reusable.dart';
 import 'farmer/crop.dart';
 import 'farmer/details.dart';
 import 'farmer/farmDetails.dart';
@@ -27,7 +28,7 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserData(
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Map<String, dynamic>? userData;
+  Map<String, dynamic> userData = {};
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
         await getUserData(widget.userid);
     setState(() {
-      userData = snapshot.data();
+      userData = snapshot.data()!;
     });
   }
 
@@ -86,58 +87,111 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // key: _scaffoldKey,
-      drawer: const Drawer(
-          // your drawer content here
-          ),
-      body: ListView(
-        children: [
-          Container(
-            padding:
-                const EdgeInsets.only(top: 10, left: 15, right: 20, bottom: 10),
-            decoration: BoxDecoration(color: Colors.green[700]),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      appBar: AppBar(
+        toolbarHeight: 75,
+        backgroundColor: Colors.green[800],
+        title: Text('Hello ${userData!['name']}!'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.green[800],
+              ),
+              child: Container(
+                height: 10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Icons.menu,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                    Container(
-                      child: GestureDetector(
-                        child: const Icon(
-                          Icons.notifications_rounded,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      FarmerDetails(userid: widget.userid)));
-                        },
+                    Text(
+                      'FarmNow',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
                       ),
                     ),
+                    logoWidgetDrawer("assets/images/farmnow.png", 106, 106),
                   ],
                 ),
-                const SizedBox(height: 15),
-                Container(
-                  padding: const EdgeInsets.only(left: 5, bottom: 15),
-                  child: Text(
-                    "Hello  ${userData!['name']}!",
-                    style: const TextStyle(
-                        fontSize: 21,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            ListTile(
+              title: Text('Profile'),
+              onTap: () {
+                // Handle profile tap
+                Navigator.pop(context); // Close the drawer
+                // Add logic to navigate to profile page
+              },
+            ),
+            ListTile(
+              title: Text('Logout'),
+              onTap: () {
+                // Handle logout tap
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SignScreen(
+                            title: '',
+                          )), // Replace AnotherPage() with the desired destination page
+                ); // Close the drawer
+                // Add logic to handle logout
+              },
+            ),
+          ],
+        ),
+      ),
+      body: ListView(
+        children: [
+          // Container(
+          //   padding:
+          //       const EdgeInsets.only(top: 10, left: 15, right: 20, bottom: 10),
+          //   decoration: BoxDecoration(color: Colors.green[700]),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           const Icon(
+          //             Icons.menu,
+          //             size: 30,
+          //             color: Colors.white,
+          //           ),
+          //           Container(
+          //             child: GestureDetector(
+          //               child: const Icon(
+          //                 Icons.notifications_rounded,
+          //                 size: 30,
+          //                 color: Colors.white,
+          //               ),
+          //               onTap: () {
+          //                 Navigator.push(
+          //                     context,
+          //                     MaterialPageRoute(
+          //                         builder: (context) =>
+          //                             FarmerDetails(userid: widget.userid)));
+          //               },
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //       const SizedBox(height: 15),
+          //       Container(
+          //         padding: const EdgeInsets.only(left: 5, bottom: 15),
+          //         child: Text(
+          //           "Hello  ${userData!['name']}!",
+          //           style: const TextStyle(
+          //               fontSize: 21,
+          //               fontWeight: FontWeight.bold,
+          //               color: Colors.white),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.only(top: 55, left: 15, right: 20),
             child: Column(
