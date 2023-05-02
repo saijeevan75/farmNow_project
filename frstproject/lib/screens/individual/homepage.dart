@@ -1,15 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class IndividualUI extends StatefulWidget {
-  const IndividualUI({super.key});
+  final String userid;
+  const IndividualUI({Key? key, required this.userid}) : super(key: key);
 
   @override
   State<IndividualUI> createState() => _IndividualUIState();
 }
 
+Future<DocumentSnapshot<Map<String, dynamic>>> getUserData(
+    String userId) async {
+  return FirebaseFirestore.instance.collection('users').doc(userId).get();
+}
+
 class _IndividualUIState extends State<IndividualUI> {
   int _selectedIndex = 0;
   int currentIndex = 0;
+  Map<String, dynamic> userData = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserData();
+  }
+
+  Future<void> _getUserData() async {
+    DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await getUserData(widget.userid);
+    setState(() {
+      userData = snapshot.data()!;
+    });
+  }
 
   final List<Widget> _widgetOptions = [
     // Replace these with your own views/screens
@@ -29,7 +51,7 @@ class _IndividualUIState extends State<IndividualUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Hello Anvith!"),
+        title: Text("Hello ${userData['name']}!"),
         backgroundColor: Colors.green[800],
       ),
       drawer: const Drawer(),
@@ -126,7 +148,8 @@ class _IndividualUIState extends State<IndividualUI> {
                 // color: Colors.white,
                 color: Colors.grey[300],
                 height: 280,
-                width: MediaQuery.of(context).size.width/1.2,
+                width: MediaQuery.of(context).size.width / 1.2,
+
                 child: ListView.builder(
                     itemCount: 10,
                     scrollDirection: Axis.horizontal,
@@ -144,13 +167,13 @@ class _IndividualUIState extends State<IndividualUI> {
                                 ),
                               ]),
                           // margin: const EdgeInsets.all(5),
-                          width: MediaQuery.of(context).size.width/1.23,
+                          width: MediaQuery.of(context).size.width / 1.23,
                           child: Column(
                             children: [
                               Expanded(
                                 child: Container(
-                          width: MediaQuery.of(context).size.width/1.23,
-
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.23,
                                   decoration: const BoxDecoration(
                                     image: DecorationImage(
                                       image:
@@ -190,7 +213,6 @@ class _IndividualUIState extends State<IndividualUI> {
                                         const SizedBox(
                                           width: 46,
                                         ),
-                                       
                                       ],
                                     )
                                   ],

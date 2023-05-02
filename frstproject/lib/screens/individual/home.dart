@@ -5,14 +5,9 @@ import 'package:frstproject/screens/individual/activity.dart';
 
 import 'homepage.dart';
 
-
-
-
-
-
-
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String userid;
+  const HomePage({Key? key, required this.userid}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -21,13 +16,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
 
-  List<Widget> _screens = [
-    const IndividualUI(),
-    const UserActivity(),
-    const UserProfile(),
-  ];
   @override
   Widget build(BuildContext context) {
+    List<Widget> _screens = [
+      IndividualUI(
+        userid: widget.userid,
+      ),
+      const UserActivity(),
+      const UserProfile(),
+    ];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -36,11 +33,10 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.white,
           currentIndex: currentIndex,
           selectedItemColor: Colors.green[800],
-          selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 13
-          ),
-          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          selectedLabelStyle:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          unselectedLabelStyle:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
           unselectedItemColor: Colors.grey,
           onTap: (int index) {
             setState(() {

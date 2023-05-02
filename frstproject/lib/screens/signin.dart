@@ -12,8 +12,6 @@ import 'package:frstproject/utils/colors_util.dart';
 import '../reusable_widgets/reusable.dart';
 import 'organization_home.dart';
 
-
-
 final _auth = FirebaseAuth.instance;
 final _firestore = FirebaseFirestore.instance;
 
@@ -32,8 +30,7 @@ class _SignScreenState extends State<SignScreen> {
   String uid = " ";
 
   bool loading = false;
-  String message =  " " ;
-
+  String message = " ";
 
   final _formkey = GlobalKey<FormState>();
 
@@ -87,17 +84,17 @@ class _SignScreenState extends State<SignScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Future.delayed(const Duration(seconds: 0), (){
+                      Future.delayed(const Duration(seconds: 0), () {
                         setState(() {
                           loading = true;
-                          
                         });
                       });
-                      
                     },
                     child: pageButton(context, true, () async {
                       if (_formkey.currentState!.validate()) {
-                        if (loading == true) {const CircularProgressIndicator();}
+                        if (loading == true) {
+                          const CircularProgressIndicator();
+                        }
 
                         try {
                           UserCredential userCredential =
@@ -105,9 +102,9 @@ class _SignScreenState extends State<SignScreen> {
                             email: _emailTextController.text,
                             password: _passwordTextController.text,
                           );
-                  
+
                           String uid = userCredential.user?.uid ?? 'uid';
-                  
+
                           DocumentSnapshot userDoc = await FirebaseFirestore
                               .instance
                               .collection('users')
@@ -129,8 +126,9 @@ class _SignScreenState extends State<SignScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const HomePage()));
+                                    builder: (context) => HomePage(
+                                          userid: uid,
+                                        )));
                           }
                           if (role == "Organization") {
                             // ignore: use_build_context_synchronously
@@ -161,11 +159,10 @@ class _SignScreenState extends State<SignScreen> {
                           });
                           // print("Error ${error.toString()}");
                         }
-                        
                       }
                     }),
                   ),
-                  
+
                   // const CircularProgressIndicator(),
 
                   signUpOption(),
