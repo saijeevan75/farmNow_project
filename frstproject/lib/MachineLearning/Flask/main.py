@@ -23,23 +23,6 @@ def predict():
     # Return the predicted output as a JSON response
     return jsonify({'prediction': y_pred.tolist()})
 
-
-    # n = request.form.get('N')
-    # p = request.form.get('P')
-    # k = request.form.get('K')
-    # temperature = request.form.get('temperature')
-    # humidity = request.form.get('humidity')
-    # ph = request.form.get('ph')
-    # rainfall = request.form.get('rainfall')
-    # input_query = np.array([[n,p,k,temperature,humidity,ph,rainfall]])
-
-    # result = model.predict(input_query)[0]
-
-
-    # return jsonify({'label':result})
-
-
-
 if __name__ == '__main__':
     app.run(debug=True)
 
