@@ -9,8 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import '../../reusable_widgets/reusable.dart';
 import '../../roles.dart';
 
-
-
 final _auth = FirebaseAuth.instance;
 
 class FarmDetails extends StatefulWidget {
@@ -218,8 +216,9 @@ class _FarmDetailsState extends State<FarmDetails> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                HomeScreen(userid: '',)), // Replace AnotherPage() with the desired destination page
+                            builder: (context) => HomeScreen(
+                                  userid: '',
+                                )), // Replace AnotherPage() with the desired destination page
                       );
                     }
                   },
@@ -244,26 +243,18 @@ class _FarmDetailsState extends State<FarmDetails> {
     // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     // User? user = _auth.currentUser;
     Farmdetails farmdetails = Farmdetails();
+    farmdetails.uid = userid;
     farmdetails.city = city;
     farmdetails.address = address;
     farmdetails.crop = crop;
     farmdetails.price = price;
     farmdetails.img = img;
-    final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(userid);
-    final newCollectionRef = userDocRef.collection('farmDetails');
-    await newCollectionRef.add({
-      'city': city,
-      'address': address,
-      'crop': crop,
-      'price': price,
-      'img': img
-    });
 
-    // await firebaseFirestore
-    //     .collection("farmdetails")
-    //     .doc(userid)
-    //     .set(Farmdetails.toMap());
+    FirebaseFirestore itemscollection = FirebaseFirestore.instance;
+    await itemscollection
+        .collection("farms")
+        .doc(userid)
+        .set(farmdetails.toMap());
 
     // ignore: use_build_context_synchronously
     Navigator.push(

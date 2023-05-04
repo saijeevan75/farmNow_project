@@ -52,7 +52,6 @@ class _IndiviScreenState extends State<IndiviScreen> {
                     child: Text("Logout ${userData!['role']}"),
                     onPressed: () {
                       FirebaseAuth.instance.signOut().then((value) {
-                        print("Signed out");
                         Navigator.push(
                           context,
                           MaterialPageRoute(

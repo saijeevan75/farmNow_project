@@ -95,7 +95,7 @@ TextFormField reusableTextField(String text, IconData icon, bool isPasswordType,
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
           borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
-      contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 17.0),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 17.0),
     ),
     keyboardType: isPasswordType
         ? TextInputType.visiblePassword
@@ -115,7 +115,7 @@ TextField farmdetailsfield(String text, IconData icon, bool isPasswordType,
     style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 15),
     decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0.3, color: Colors.green),
+            borderSide: const BorderSide(width: 0.3, color: Colors.green),
             borderRadius: BorderRadius.circular(15)),
         fillColor: Colors.green,
         prefixIcon: Icon(
