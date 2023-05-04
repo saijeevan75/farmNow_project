@@ -1,3 +1,5 @@
+//GOOGLE CLOUD PLATFORM PROJECT ID :  farmnow-385616
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:frstproject/screens/individual/home.dart';
