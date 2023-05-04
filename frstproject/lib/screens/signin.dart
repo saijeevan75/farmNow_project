@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frstproject/screens/farmer_home.dart';
 import 'package:frstproject/screens/individual/home.dart';
-import 'package:frstproject/screens/individual_home.dart';
+
 import 'package:frstproject/screens/signup.dart';
 import 'package:frstproject/utils/colors_util.dart';
 
@@ -69,16 +69,6 @@ class _SignScreenState extends State<SignScreen> {
                     true,
                     _passwordTextController,
                   ),
-
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Text(
-                  //   message,
-                  //   style: TextStyle(
-                  //       color: hexStringToColor("#50C878"),
-                  //       fontWeight: FontWeight.bold),
-                  // ),
                   const SizedBox(
                     height: 5,
                   ),

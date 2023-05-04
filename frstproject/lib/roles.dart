@@ -30,6 +30,7 @@ class UserRole {
 }
 
 class Farmdetails {
+  String uid = " ";
   String? city;
   String? address;
   String? crop;
@@ -37,9 +38,10 @@ class Farmdetails {
   String? img;
 
 // receiving data
-  Farmdetails({this.city, this.address, this.crop, this.price, this.img});
+  Farmdetails({this.city, this.address, this.crop, this.price, this.img, uid});
   factory Farmdetails.fromMap(map) {
     return Farmdetails(
+        uid: map['uid'],
         city: map['city'],
         address: map['address'],
         crop: map['crop'],
@@ -49,6 +51,7 @@ class Farmdetails {
 // sending data
   Map<String, dynamic> toMap() {
     return {
+      'uid': uid,
       'city': city,
       'address': address,
       'crop': crop,

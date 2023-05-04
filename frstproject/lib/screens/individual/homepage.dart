@@ -143,85 +143,106 @@ class _IndividualUIState extends State<IndividualUI> {
               const SizedBox(
                 height: 17,
               ),
-              Container(
-                padding: const EdgeInsets.all(4),
-                // color: Colors.white,
-                color: Colors.grey[300],
-                height: 280,
-                width: MediaQuery.of(context).size.width / 1.2,
+              Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('items')
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Text('Loading...');
+                        }
+                        return Container(
+                          padding: const EdgeInsets.all(4),
+                          // color: Colors.white,
+                          color: Colors.grey[300],
+                          height: 280,
+                          width: MediaQuery.of(context).size.width / 1.2,
 
-                child: ListView.builder(
-                    itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: const Offset(2, 6),
-                                  color: Colors.black.withOpacity(1),
-                                  blurRadius: 20,
-                                  spreadRadius: 9,
-                                ),
-                              ]),
-                          // margin: const EdgeInsets.all(5),
-                          width: MediaQuery.of(context).size.width / 1.23,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width / 1.23,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage("assets/images/farm2.jpg"),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "Farm - 1",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    const Text("City"),
-                                    Row(
-                                      // crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                          child: ListView.builder(
+                              itemCount: 10,
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) => Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            offset: const Offset(2, 6),
+                                            color: Colors.black.withOpacity(1),
+                                            blurRadius: 20,
+                                            spreadRadius: 9,
+                                          ),
+                                        ]),
+                                    // margin: const EdgeInsets.all(5),
+                                    width: MediaQuery.of(context).size.width /
+                                        1.23,
+                                    child: Column(
                                       children: [
-                                        Text("Price - 100/-"),
-                                        IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(Icons.add_circle)),
+                                        Expanded(
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                1.23,
+                                            decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/farm2.jpg"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                         const SizedBox(
-                                          width: 46,
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text(
+                                                "Farm - 1",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              const Text("City"),
+                                              Row(
+                                                // crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Text("Price - 100/-"),
+                                                  IconButton(
+                                                      onPressed: () {},
+                                                      icon: Icon(
+                                                          Icons.add_circle)),
+                                                  const SizedBox(
+                                                    width: 46,
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
-              ),
+                                    ),
+                                  )),
+                        );
+                      })),
             ],
           ),
         ),

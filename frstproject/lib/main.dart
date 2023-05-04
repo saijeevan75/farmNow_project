@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:frstproject/screens/happy.dart';
 import 'package:frstproject/screens/individual/home.dart';
 import 'package:frstproject/screens/signin.dart';
 import 'package:frstproject/screens/signup.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      
       home: const SignScreen(
         title: 'Sign in',
       ),
