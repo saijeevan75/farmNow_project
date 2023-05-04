@@ -50,8 +50,8 @@ class _FarmStoreState extends State<FarmStore> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green[800],
-        title: Text('welcome to FarmNow Store \n ${userData['name']}!'),
-        toolbarHeight: 100,
+        title: Text('FarmNow Store'),
+        toolbarHeight: 75,
       ),
       body: Column(children: [
         Padding(
@@ -59,8 +59,8 @@ class _FarmStoreState extends State<FarmStore> {
               const EdgeInsets.only(left: 30.0, right: 30, bottom: 10, top: 10),
           child: Image.asset(
             "assets/images/farmnow.png",
-            width: 280,
-            height: 280,
+            width: 140,
+            height: 140,
           ),
         ),
         Padding(
@@ -68,13 +68,14 @@ class _FarmStoreState extends State<FarmStore> {
             child: Text("We deliver\n directly from the farmer",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.notoSerif(
-                    fontSize: 48, fontWeight: FontWeight.bold))),
+                    fontSize: 28, fontWeight: FontWeight.bold))),
         const SizedBox(height: 24),
         const Text(
           "items that you need",
           style: TextStyle(color: Colors.grey),
         ),
-        const Spacer(),
+        //const Spacer(),
+        const SizedBox(height: 36,),
         GestureDetector(
           onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) {
